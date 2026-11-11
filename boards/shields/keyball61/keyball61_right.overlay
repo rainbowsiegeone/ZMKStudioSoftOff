@@ -76,3 +76,39 @@
     device = <&trackball>;
     input-processors = <&zip_xy_transform INPUT_TRANSFORM_XY_SWAP>;
 };
+
+/*
+ * Поведения драйвера датчика (смена CPI и накопление отчётов).
+ * Объявлены здесь, а не в раскладке, чтобы они были только в сборке с датчиком:
+ * без них драйвер не собирается (служебный код сохранения настроек ссылается на них).
+ * default-cpi совпадает со значением cpi в узле датчика.
+ */
+/ {
+    behaviors {
+        pmw_cpi_next: pmw_cpi_next {
+            compatible = "zmk,behavior-pmw3360-cpi-cycle";
+            #binding-cells = <0>;
+            next;
+            default-cpi = <500>;
+        };
+
+        pmw_cpi_prev: pmw_cpi_prev {
+            compatible = "zmk,behavior-pmw3360-cpi-cycle";
+            #binding-cells = <0>;
+            default-cpi = <500>;
+        };
+
+        pmw_burst_next: pmw_burst_next {
+            compatible = "zmk,behavior-pmw3360-burst-accumulation-cycle";
+            #binding-cells = <0>;
+            next;
+            default-max-samples = <1>;
+        };
+
+        pmw_burst_prev: pmw_burst_prev {
+            compatible = "zmk,behavior-pmw3360-burst-accumulation-cycle";
+            #binding-cells = <0>;
+            default-max-samples = <1>;
+        };
+    };
+};
