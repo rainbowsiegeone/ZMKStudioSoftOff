@@ -1,0 +1,177 @@
+/*
+ * Донгл Keyball61: подключается к компьютеру по USB, клавиш и трекбола
+ * на нём нет. Принимает данные от половин по Bluetooth.
+ */
+
+#include "keyball61_layout.dtsi"
+#include "keyball61_trackball_split.dtsi"
+#include <input/processors.dtsi>
+#include <physical_layouts.dtsi>
+#include <dt-bindings/zmk/input_transform.h>
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+/ {
+    chosen {
+        /* Для ZMK Studio: вместо отдельных kscan и matrix-transform
+         * используется физическая раскладка, которая на них ссылается. */
+        /delete-property/ zmk,matrix-transform;
+        zmk,physical-layout = &keyball61_physical_layout;
+    };
+
+    /* Физическая раскладка клавиш для ZMK Studio (порядок клавиш = порядок в keymap).
+     * Размеры и координаты в сотых долях клавиши (100 = 1 клавиша). */
+    keyball61_physical_layout: keyball61_physical_layout {
+        compatible = "zmk,physical-layout";
+        display-name = "Keyball61";
+        kscan = <&mock_kscan>;
+        transform = <&default_transform>;
+        keys
+        = <&key_physical_attrs 100 100 99 25 1060 149 75>
+        , <&key_physical_attrs 100 100 196 49 1060 246 99>
+        , <&key_physical_attrs 100 100 300 36 1060 350 86>
+        , <&key_physical_attrs 100 100 402 35 1060 452 85>
+        , <&key_physical_attrs 100 100 496 78 1060 546 128>
+        , <&key_physical_attrs 100 100 590 117 1060 640 167>
+        , <&key_physical_attrs 100 100 953 117 (-1060) 1003 167>
+        , <&key_physical_attrs 100 100 1048 78 (-1060) 1098 128>
+        , <&key_physical_attrs 100 100 1141 35 (-1060) 1191 85>
+        , <&key_physical_attrs 100 100 1243 36 (-1060) 1293 86>
+        , <&key_physical_attrs 100 100 1347 49 (-1060) 1397 99>
+        , <&key_physical_attrs 100 100 1445 25 (-1060) 1495 75>
+        , <&key_physical_attrs 100 100 80 123 1060 130 173>
+        , <&key_physical_attrs 100 100 177 148 1060 227 198>
+        , <&key_physical_attrs 100 100 282 135 1060 332 185>
+        , <&key_physical_attrs 100 100 384 133 1060 434 183>
+        , <&key_physical_attrs 100 100 477 176 1060 527 226>
+        , <&key_physical_attrs 100 100 572 215 1060 622 265>
+        , <&key_physical_attrs 100 100 972 215 (-1060) 1022 265>
+        , <&key_physical_attrs 100 100 1066 176 (-1060) 1116 226>
+        , <&key_physical_attrs 100 100 1160 133 (-1060) 1210 183>
+        , <&key_physical_attrs 100 100 1262 135 (-1060) 1312 185>
+        , <&key_physical_attrs 100 100 1366 148 (-1060) 1416 198>
+        , <&key_physical_attrs 100 100 1463 123 (-1060) 1513 173>
+        , <&key_physical_attrs 100 100 62 222 1060 112 272>
+        , <&key_physical_attrs 100 100 159 246 1060 209 296>
+        , <&key_physical_attrs 100 100 263 233 1060 313 283>
+        , <&key_physical_attrs 100 100 365 232 1060 415 282>
+        , <&key_physical_attrs 100 100 459 275 1060 509 325>
+        , <&key_physical_attrs 100 100 553 314 1060 603 364>
+        , <&key_physical_attrs 100 100 990 314 (-1060) 1040 364>
+        , <&key_physical_attrs 100 100 1084 275 (-1060) 1134 325>
+        , <&key_physical_attrs 100 100 1178 232 (-1060) 1228 282>
+        , <&key_physical_attrs 100 100 1280 233 (-1060) 1330 283>
+        , <&key_physical_attrs 100 100 1384 246 (-1060) 1434 296>
+        , <&key_physical_attrs 100 100 1481 222 (-1060) 1531 272>
+        , <&key_physical_attrs 100 100 43 320 1060 93 370>
+        , <&key_physical_attrs 100 100 141 344 1060 191 394>
+        , <&key_physical_attrs 100 100 245 331 1060 295 381>
+        , <&key_physical_attrs 100 100 347 330 1060 397 380>
+        , <&key_physical_attrs 100 100 440 373 1060 490 423>
+        , <&key_physical_attrs 100 100 535 412 1060 585 462>
+        , <&key_physical_attrs 100 100 624 514 1560 674 564>
+        , <&key_physical_attrs 100 100 920 514 (-1560) 970 564>
+        , <&key_physical_attrs 100 100 1008 412 (-1060) 1058 462>
+        , <&key_physical_attrs 100 100 1103 373 (-1060) 1153 423>
+        , <&key_physical_attrs 100 100 1196 330 (-1060) 1246 380>
+        , <&key_physical_attrs 100 100 1298 331 (-1060) 1348 381>
+        , <&key_physical_attrs 100 100 1403 344 (-1060) 1453 394>
+        , <&key_physical_attrs 100 100 1500 320 (-1060) 1550 370>
+        , <&key_physical_attrs 100 100 25 418 1060 75 468>
+        , <&key_physical_attrs 100 100 122 442 1060 172 492>
+        , <&key_physical_attrs 100 100 226 429 1060 276 479>
+        , <&key_physical_attrs 100 100 328 428 1060 378 478>
+        , <&key_physical_attrs 100 100 410 550 1760 460 600>
+        , <&key_physical_attrs 100 100 526 598 2760 576 648>
+        , <&key_physical_attrs 100 100 632 667 3960 682 717>
+        , <&key_physical_attrs 100 100 912 667 (-3960) 962 717>
+        , <&key_physical_attrs 100 100 1017 598 (-2760) 1067 648>
+        , <&key_physical_attrs 40 40 1163 580 (-1760) 1183 600>
+        , <&key_physical_attrs 40 40 1245 458 (-1060) 1265 478>
+        , <&key_physical_attrs 40 40 1347 459 (-1060) 1367 479>
+        , <&key_physical_attrs 100 100 1421 442 (-1060) 1471 492>
+        , <&key_physical_attrs 100 100 1518 418 (-1060) 1568 468>
+        ;
+    };
+
+    mock_kscan: mock_kscan_0 {
+        compatible = "zmk,kscan-mock";
+        columns = <0>;
+        rows = <0>;
+        events = <0>;
+    };
+
+    input_processors {
+        /* Масштабирование прокрутки с накоплением остатка (плавный скролл) */
+        kb_scroll_scaler: kb_scroll_scaler {
+            compatible = "zmk,input-processor-scaler";
+            #input-processor-cells = <2>;
+            type = <INPUT_EV_REL>;
+            codes = <INPUT_REL_WHEEL INPUT_REL_HWHEEL>;
+            track-remainders;
+        };
+
+        /* Масштабирование курсора с накоплением остатка (медленный режим без «мёртвых» шагов) */
+        kb_xy_scaler: kb_xy_scaler {
+            compatible = "zmk,input-processor-scaler";
+            #input-processor-cells = <2>;
+            type = <INPUT_EV_REL>;
+            codes = <INPUT_REL_X INPUT_REL_Y>;
+            track-remainders;
+        };
+    };
+
+    /* Слои-флаги скорости прокрутки + слой 3 (режим прокрутки) = слои 8 и 9 */
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+
+        scroll_slow_active {
+            if-layers = <3 6>;
+            then-layer = <8>;
+        };
+
+        scroll_fast_active {
+            if-layers = <3 7>;
+            then-layer = <9>;
+        };
+    };
+};
+
+/* Включаем обработку трекбола на донгле.
+ *
+ * Правила проверяются сверху вниз, срабатывает первое подошедшее.
+ * Слои: 3 = прокрутка (удерживается), 4/5 = курсор медленнее/быстрее (включаются клавишей),
+ *       6/7 = прокрутка медленнее/быстрее (включаются клавишей), 8/9 = служебные.
+ */
+&trackball_listener {
+    status = "okay";
+
+    /* Прокрутка, медленная (слой 3 + флаг 6) */
+    scroll_slow {
+        layers = <8>;
+        input-processors = <&zip_xy_to_scroll_mapper &zip_scroll_transform INPUT_TRANSFORM_Y_INVERT &kb_scroll_scaler 1 8>;
+    };
+
+    /* Прокрутка, быстрая (слой 3 + флаг 7) */
+    scroll_fast {
+        layers = <9>;
+        input-processors = <&zip_xy_to_scroll_mapper &zip_scroll_transform INPUT_TRANSFORM_Y_INVERT &kb_scroll_scaler 1 2>;
+    };
+
+    /* Прокрутка, обычная. 1/4 как делитель 4 в QMK. */
+    scroller {
+        layers = <3>;
+        input-processors = <&zip_xy_to_scroll_mapper &zip_scroll_transform INPUT_TRANSFORM_Y_INVERT &kb_scroll_scaler 1 4>;
+    };
+
+    /* Курсор медленнее: в 2 раза */
+    cursor_slow {
+        layers = <4>;
+        input-processors = <&kb_xy_scaler 1 2>;
+    };
+
+    /* Курсор быстрее: в 2 раза */
+    cursor_fast {
+        layers = <5>;
+        input-processors = <&kb_xy_scaler 2 1>;
+    };
+};

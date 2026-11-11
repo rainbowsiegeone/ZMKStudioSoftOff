@@ -1,0 +1,13 @@
+# Keyball61 (ZMK)
+
+config SHIELD_KEYBALL61_RIGHT
+	def_bool $(shields_list_contains,keyball61_right)
+
+config SHIELD_KEYBALL61_DONGLE
+	def_bool $(shields_list_contains,keyball61_dongle)
+
+config SHIELD_KEYBALL61_LEFT
+	def_bool $(shields_list_contains,keyball61_left)
+
+config SHIELD_KEYBALL61_DIRECT_RIGHT
+	def_bool $(shields_list_contains,keyball61_direct_right)

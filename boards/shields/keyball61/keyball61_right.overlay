@@ -1,0 +1,69 @@
+/*
+ * Правая половина Keyball61 (с трекболом PMW3360), периферийная часть:
+ * подключается к донглу, а не к компьютеру.
+ *   NCS  -> Pro Micro D10  (P0.09)
+ *   MOSI -> Pro Micro D16  (P0.10)
+ *   MISO -> Pro Micro D14  (P1.11)
+ *   SCLK -> Pro Micro D15  (P1.13)
+ */
+
+#include "keyball61.dtsi"
+#include <zephyr/dt-bindings/gpio/nordic-nrf-gpio.h>
+#include <zephyr/dt-bindings/pinctrl/nrf-pinctrl.h>
+#include "keyball61_trackball_split.dtsi"
+#include <input/processors.dtsi>
+#include <dt-bindings/zmk/input_transform.h>
+
+/* Ключи правой половины идут в карте после ключей левой */
+&default_transform {
+    col-offset = <9>;
+};
+
+/* Усиленная мощность выводов SPI: помогает, если между линиями есть утечка.
+ * Пины как на плате: SCLK = P1.13, MOSI = P0.10, MISO = P1.11. */
+&pinctrl {
+    kb_spi_default: kb_spi_default {
+        group1 {
+            psels = <NRF_PSEL(SPIM_SCK, 1, 13)>,
+                    <NRF_PSEL(SPIM_MOSI, 0, 10)>;
+            nordic,drive-mode = <NRF_DRIVE_H0H1>;
+        };
+        group2 {
+            psels = <NRF_PSEL(SPIM_MISO, 1, 11)>;
+        };
+    };
+
+    kb_spi_sleep: kb_spi_sleep {
+        group1 {
+            psels = <NRF_PSEL(SPIM_SCK, 1, 13)>,
+                    <NRF_PSEL(SPIM_MOSI, 0, 10)>,
+                    <NRF_PSEL(SPIM_MISO, 1, 11)>;
+            low-power-enable;
+        };
+    };
+};
+
+&pro_micro_spi {
+    status = "okay";
+    pinctrl-0 = <&kb_spi_default>;
+    pinctrl-1 = <&kb_spi_sleep>;
+    pinctrl-names = "default", "sleep";
+    /* NCS = D10 = P0.09. Флаги мощности вывода нельзя передавать через &pro_micro,
+     * поэтому указан контроллер gpio0 напрямую. */
+    cs-gpios = <&gpio0 9 (GPIO_ACTIVE_LOW | NRF_GPIO_DRIVE_H0H1)>;
+
+    trackball: trackball@0 {
+        compatible = "pixart,pmw3360";
+        reg = <0>;
+        spi-max-frequency = <2000000>;
+        cpi = <500>;
+
+    };
+};
+
+/* События трекбола передаются донглу. Оси датчика повёрнуты на 90 градусов
+ * относительно курсора, поэтому меняем X и Y местами уже здесь. */
+&trackball_split {
+    device = <&trackball>;
+    input-processors = <&zip_xy_transform INPUT_TRANSFORM_XY_SWAP>;
+};

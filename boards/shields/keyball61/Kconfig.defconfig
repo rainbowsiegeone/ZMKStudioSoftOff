@@ -1,0 +1,78 @@
+# Донгл (central) подключается к ПК по USB; правая половина (peripheral)
+# подключается к донглу по Bluetooth.
+
+if SHIELD_KEYBALL61_DONGLE
+
+config ZMK_KEYBOARD_NAME
+	default "Keyball61"
+
+config ZMK_SPLIT
+	default y
+
+config ZMK_SPLIT_ROLE_CENTRAL
+	default y
+
+config ZMK_POINTING
+	default y
+
+# Две периферийные части: левая и правая половины.
+config ZMK_SPLIT_BLE_CENTRAL_PERIPHERALS
+	default 2
+
+config BT_MAX_CONN
+	default 7
+
+config BT_MAX_PAIRED
+	default 7
+
+endif
+
+if SHIELD_KEYBALL61_RIGHT
+
+config ZMK_KEYBOARD_NAME
+	default "Keyball61 R"
+
+config ZMK_SPLIT
+	default y
+
+config ZMK_POINTING
+	default y
+
+config SPI
+	default y
+
+endif
+
+if SHIELD_KEYBALL61_LEFT
+
+config ZMK_KEYBOARD_NAME
+	default "Keyball61 L"
+
+config ZMK_SPLIT
+	default y
+
+endif
+
+# Вариант БЕЗ донгла: правая половина с трекболом - главное устройство (central),
+# левая половина (сборка keyball61_left) подключается к ней.
+if SHIELD_KEYBALL61_DIRECT_RIGHT
+
+config ZMK_KEYBOARD_NAME
+	default "Keyball61"
+
+config ZMK_SPLIT
+	default y
+
+config ZMK_SPLIT_ROLE_CENTRAL
+	default y
+
+config ZMK_POINTING
+	default y
+
+config SPI
+	default y
+
+config ZMK_SPLIT_BLE_CENTRAL_PERIPHERALS
+	default 1
+
+endif
